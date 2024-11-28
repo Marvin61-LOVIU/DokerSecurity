@@ -16,17 +16,20 @@ jobs:
       - name: Set up Docker
         uses: docker/setup-buildx-action@v2
 
+      - name: Create a directory for the report
+        run: mkdir -p reports
+
       - name: Run Docker Bench Security
         run: |
           docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
-          -v $(pwd):/docker-bench-security \
-          docker/docker-bench-security > report_$(date +'%Y%m%d_%H%M%S').txt
+          -v $(pwd)/reports:/docker-bench-security/reports \
+          docker/docker-bench-security > reports/report_$(date +'%Y%m%d_%H%M%S').txt
           
       - name: List files to verify report
-        run: ls -l
+        run: ls -l reports
 
       - name: Upload report as artifact
         uses: actions/upload-artifact@v3
         with:
           name: docker-bench-security-report
-          path: report_*.txt
+          path: reports/report_*.txt

@@ -27,3 +27,4 @@ jobs:
         with:
           name: docker-bench-security-report
           path: report_*.txt
+# Este es un comentario de prueba

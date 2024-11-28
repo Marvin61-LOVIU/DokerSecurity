@@ -20,11 +20,13 @@ jobs:
         run: |
           docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
           -v $(pwd):/docker-bench-security \
-          docker/docker-bench-security > report_$(date +"%Y%m%d_%H%M%S").txt
+          docker/docker-bench-security > report_$(date +'%Y%m%d_%H%M%S').txt
+          
+      - name: List files to verify report
+        run: ls -l
 
       - name: Upload report as artifact
         uses: actions/upload-artifact@v3
         with:
           name: docker-bench-security-report
           path: report_*.txt
-# Este es un comentario de prueba
